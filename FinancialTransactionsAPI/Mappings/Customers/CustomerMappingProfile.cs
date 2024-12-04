@@ -9,8 +9,10 @@ namespace FinancialTransactionsAPI.Mappings.Customers
         public CustomerMappingProfile()
         {
             //CreateMap<CreateCustomerDTO, Customer>().ReverseMap();
-            CreateMap<Customer, CustomerDto>();
+            CreateMap<Customer, CustomerDto>().ReverseMap();
             CreateMap<CreateCustomerDto, Customer>();
+            CreateMap<UpdateCustomerDto, Customer>()
+                    .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 }

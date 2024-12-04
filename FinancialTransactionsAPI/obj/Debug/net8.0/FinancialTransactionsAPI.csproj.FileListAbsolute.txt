@@ -169,3 +169,4 @@
 /Users/lelafetaj/Desktop/otherFolders/FinancialTransactions/FinancialTransactionsAPI/obj/Debug/net8.0/ref/FinancialTransactionsAPI.dll
 /Users/lelafetaj/Desktop/otherFolders/FinancialTransactions/FinancialTransactionsAPI/bin/Debug/net8.0/AutoMapper.dll
 /Users/lelafetaj/Desktop/otherFolders/FinancialTransactions/FinancialTransactionsAPI/bin/Debug/net8.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+/Users/lelafetaj/Desktop/otherFolders/FinancialTransactions/FinancialTransactionsAPI/obj/Debug/net8.0/FinancialTransactionsAPI.sourcelink.json

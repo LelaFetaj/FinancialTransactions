@@ -1,5 +1,6 @@
 using FinancialTransactionsAPI.Mappings.Customers;
 using FinancialTransactionsAPI.Mappings.Transactions;
+using FinancialTransactionsAPI.Middlewares;
 using FinancialTransactionsAPI.Repositories.Customers;
 using FinancialTransactionsAPI.Repositories.Transactions;
 using FinancialTransactionsAPI.Services.Foundations.Customers;
@@ -20,6 +21,8 @@ builder.Services.AddTransient<ITransactionService, TransactionService>();
 builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
 builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddTransient<ITransactionOrchestrationService, TransactionOrchestrationService>();
+builder.Services.AddScoped<TransactionValidator>();
+builder.Services.AddScoped<CustomerValidator>();
 
 builder.Services.AddAutoMapper(typeof(TransactionMappingProfile), typeof(CustomerMappingProfile));
 
@@ -31,7 +34,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseHsts();
 app.UseHttpsRedirection();

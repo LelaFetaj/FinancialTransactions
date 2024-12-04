@@ -1,6 +1,7 @@
 using AutoMapper;
 using FinancialTransactionsAPI.Models.DTOs.Transactions;
 using FinancialTransactionsAPI.Models.Entities.Transactions;
+using FinancialTransactionsAPI.Services.Foundations.Customers;
 
 namespace FinancialTransactionsAPI.Services.Foundations.Transactions
 {
@@ -8,28 +9,50 @@ namespace FinancialTransactionsAPI.Services.Foundations.Transactions
     {
         private readonly ITransactionRepository transactionRepository;
         private readonly IMapper mapper;
+        private readonly ILogger<TransactionService> logger;
+        
 
-        public TransactionService(ITransactionRepository transactionRepository, IMapper mapper)
+        public TransactionService(
+            ITransactionRepository transactionRepository, 
+            IMapper mapper, 
+            ILogger<TransactionService> logger)
         {
             this.transactionRepository = transactionRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         public async Task<TransactionDto> CreateTransactionAsync(CreateTransactionDto createTransactionDto)
         {
             var transaction = mapper.Map<Transaction>(createTransactionDto);
             transaction.TransactionCreateDate = DateTimeOffset.UtcNow;
-            await transactionRepository.AddTransactionAsync(transaction);
-            return mapper.Map<TransactionDto>(transaction);
+
+            try
+            {
+                await transactionRepository.AddTransactionAsync(transaction);
+                return mapper.Map<TransactionDto>(transaction);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error occurred while creating transaction.");
+                throw new Exception("An error occurred while creating the transaction.");
+            }
         }
 
         public async Task<TransactionDto> GetTransactionByIdAsync(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException("Transaction ID cannot be empty.");
+            }
+
             var transaction = await transactionRepository.GetTransactionByIdAsync(id);
+
             if (transaction == null || !transaction.IsActive)
             {
                 return null;
             }
+
             return mapper.Map<TransactionDto>(transaction);
         }
 
