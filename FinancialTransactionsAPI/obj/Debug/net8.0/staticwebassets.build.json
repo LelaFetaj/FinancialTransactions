@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "KKXlzGL+2+x+2CkYw5xaAj9lTHb461aDrcY0Qt8VXi4=",
+  "Source": "FinancialTransactionsAPI",
+  "BasePath": "_content/FinancialTransactionsAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
